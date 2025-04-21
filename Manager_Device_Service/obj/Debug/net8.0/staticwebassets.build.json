@@ -1,0 +1,20 @@
+{
+  "Version": 1,
+  "Hash": "Z7KlPalEO0Z47ZG8o+UPWDSLiiUdSQXaFMgWA+JgAM8=",
+  "Source": "Manager_Device_Service",
+  "BasePath": "_content/Manager_Device_Service",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Manager_Device_Service\\wwwroot",
+      "Source": "Manager_Device_Service",
+      "ContentRoot": "C:\\Webbbb\\ManagerDevice\\Service\\Manager_Device_Service\\Manager_Device_Service\\wwwroot\\",
+      "BasePath": "_content/Manager_Device_Service",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [],
+  "Endpoints": []
+}
