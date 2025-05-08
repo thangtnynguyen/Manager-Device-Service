@@ -1,0 +1,37 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Webbbb\\ManagerDevice\\Service\\Manager_Device_Service\\Manager_Device_Service\\wwwroot\\Image\\08a5cc5b-7a77-4ecc-9763-99c49084b785_71XbRPVodtL.jpg",
+      "PackagePath": "staticwebassets\\Image\\08a5cc5b-7a77-4ecc-9763-99c49084b785_71XbRPVodtL.jpg"
+    },
+    {
+      "Id": "C:\\Webbbb\\ManagerDevice\\Service\\Manager_Device_Service\\Manager_Device_Service\\wwwroot\\Image\\Default.png",
+      "PackagePath": "staticwebassets\\Image\\Default.png"
+    },
+    {
+      "Id": "C:\\Webbbb\\ManagerDevice\\Service\\Manager_Device_Service\\Manager_Device_Service\\wwwroot\\Image\\baf7764c-8b2c-4047-a1dd-decd11f381fc_maychieu.jpg",
+      "PackagePath": "staticwebassets\\Image\\baf7764c-8b2c-4047-a1dd-decd11f381fc_maychieu.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Manager_Device_Service.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Manager_Device_Service.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.Manager_Device_Service.props",
+      "PackagePath": "build\\Manager_Device_Service.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.Manager_Device_Service.props",
+      "PackagePath": "buildMultiTargeting\\Manager_Device_Service.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.Manager_Device_Service.props",
+      "PackagePath": "buildTransitive\\Manager_Device_Service.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

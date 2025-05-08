@@ -1,0 +1,58 @@
+﻿<Project>
+  <ItemGroup>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\08a5cc5b-7a77-4ecc-9763-99c49084b785_71XbRPVodtL.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Manager_Device_Service</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Manager_Device_Service</BasePath>
+      <RelativePath>Image/08a5cc5b-7a77-4ecc-9763-99c49084b785_71XbRPVodtL.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>751n2jv742</Fingerprint>
+      <Integrity>i4MAwtooyJldG/milnOBHjr3cLT7Y2L1NhQ1cNPhDUQ=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\08a5cc5b-7a77-4ecc-9763-99c49084b785_71XbRPVodtL.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\baf7764c-8b2c-4047-a1dd-decd11f381fc_maychieu.jpg'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Manager_Device_Service</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Manager_Device_Service</BasePath>
+      <RelativePath>Image/baf7764c-8b2c-4047-a1dd-decd11f381fc_maychieu.jpg</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>44g5mz49g4</Fingerprint>
+      <Integrity>1KJ4YmwrB+1wDlscyXInVpj7ZU74Icrsp6DcmEzSgF0=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\baf7764c-8b2c-4047-a1dd-decd11f381fc_maychieu.jpg'))</OriginalItemSpec>
+    </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\Default.png'))">
+      <SourceType>Package</SourceType>
+      <SourceId>Manager_Device_Service</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>_content/Manager_Device_Service</BasePath>
+      <RelativePath>Image/Default.png</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>yjuwn74xam</Fingerprint>
+      <Integrity>rtVzLEWKXQ5EX/mhVJuSSZHZDcsIjfVGTtrYWk1aiyc=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\Image\Default.png'))</OriginalItemSpec>
+    </StaticWebAsset>
+  </ItemGroup>
+</Project>
