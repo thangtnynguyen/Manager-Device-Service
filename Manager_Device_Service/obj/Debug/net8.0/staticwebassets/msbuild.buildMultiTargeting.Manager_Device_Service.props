@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\build\Manager_Device_Service.props" />
-</Project>
