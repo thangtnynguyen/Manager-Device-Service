@@ -40,6 +40,11 @@
 
         public const string CreationTime = "creationTime";
 
+        public const string Quantity = "quantity";
+
+        public const string Name = "name";
+
+
 
 
 

@@ -112,34 +112,62 @@
       }
     },
     "/api/account-request/paging": {
-      "post": {
+      "get": {
         "tags": [
           "AccountRequest"
         ],
-        "requestBody": {
-          "content": {
-            "application/json-patch+json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetAccountRequestRequest"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetAccountRequestRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetAccountRequestRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/GetAccountRequestRequest"
-              }
+        "parameters": [
+          {
+            "name": "Keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "enum": [
+                0,
+                1,
+                2
+              ],
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "OK",
@@ -270,7 +298,142 @@
         }
       }
     },
-    "/api/borrow/create": {
+    "/api/auth/login-by-username": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUsernameRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUsernameRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUsernameRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginUsernameRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResultApiResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResultApiResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LoginResultApiResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/change-password": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordRequest"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangePasswordRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BooleanApiResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BooleanApiResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BooleanApiResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/logout": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BooleanApiResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BooleanApiResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BooleanApiResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/borrow-request/create": {
       "post": {
         "tags": [
           "BorrowRequest"
@@ -305,17 +468,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/BorrowDtoApiResult"
+                  "$ref": "#/components/schemas/BorrowRequestDtoApiResult"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BorrowDtoApiResult"
+                  "$ref": "#/components/schemas/BorrowRequestDtoApiResult"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BorrowDtoApiResult"
+                  "$ref": "#/components/schemas/BorrowRequestDtoApiResult"
                 }
               }
             }
@@ -323,7 +486,7 @@
         }
       }
     },
-    "/api/borrow/update-status": {
+    "/api/borrow-request/update-status": {
       "put": {
         "tags": [
           "BorrowRequest"
@@ -358,17 +521,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/BorrowDtoApiResult"
+                  "$ref": "#/components/schemas/BorrowRequestDtoApiResult"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BorrowDtoApiResult"
+                  "$ref": "#/components/schemas/BorrowRequestDtoApiResult"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BorrowDtoApiResult"
+                  "$ref": "#/components/schemas/BorrowRequestDtoApiResult"
                 }
               }
             }
@@ -376,49 +539,83 @@
         }
       }
     },
-    "/api/borrow/paging": {
+    "/api/borrow-request/paging": {
       "get": {
         "tags": [
           "BorrowRequest"
         ],
         "parameters": [
           {
-            "name": "keyword",
+            "name": "Keyword",
             "in": "query",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "sortBy",
+            "name": "Class",
             "in": "query",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "orderBy",
+            "name": "RoomName",
             "in": "query",
             "schema": {
               "type": "string"
             }
           },
           {
-            "name": "pageIndex",
+            "name": "UserActionId",
             "in": "query",
             "schema": {
               "type": "integer",
-              "format": "int32",
-              "default": 1
+              "format": "int32"
             }
           },
           {
-            "name": "pageSize",
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "enum": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageIndex",
             "in": "query",
             "schema": {
               "type": "integer",
-              "format": "int32",
-              "default": 10
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
             }
           }
         ],
@@ -428,17 +625,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/BorrowDtoPagingResultApiResult"
+                  "$ref": "#/components/schemas/BorrowRequestDtoPagingResultApiResult"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BorrowDtoPagingResultApiResult"
+                  "$ref": "#/components/schemas/BorrowRequestDtoPagingResultApiResult"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BorrowDtoPagingResultApiResult"
+                  "$ref": "#/components/schemas/BorrowRequestDtoPagingResultApiResult"
                 }
               }
             }
@@ -446,7 +643,111 @@
         }
       }
     },
-    "/api/borrow/get-by-id": {
+    "/api/borrow-request": {
+      "get": {
+        "tags": [
+          "BorrowRequest"
+        ],
+        "parameters": [
+          {
+            "name": "Keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Class",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "RoomName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "UserActionId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "enum": [
+                0,
+                1,
+                2,
+                3
+              ],
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BorrowRequestDtoPagingResultApiResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BorrowRequestDtoPagingResultApiResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BorrowRequestDtoPagingResultApiResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/borrow-request/get-by-id": {
       "get": {
         "tags": [
           "BorrowRequest"
@@ -467,17 +768,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/BorrowDtoApiResult"
+                  "$ref": "#/components/schemas/BorrowRequestDtoApiResult"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BorrowDtoApiResult"
+                  "$ref": "#/components/schemas/BorrowRequestDtoApiResult"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BorrowDtoApiResult"
+                  "$ref": "#/components/schemas/BorrowRequestDtoApiResult"
                 }
               }
             }
@@ -841,6 +1142,20 @@
             }
           },
           {
+            "name": "SerialNumber",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
             "name": "Status",
             "in": "query",
             "schema": {
@@ -931,17 +1246,17 @@
             "content": {
               "text/plain": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeviceDtoApiResult"
+                  "$ref": "#/components/schemas/DeviceByIdDtoApiResult"
                 }
               },
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeviceDtoApiResult"
+                  "$ref": "#/components/schemas/DeviceByIdDtoApiResult"
                 }
               },
               "text/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/DeviceDtoApiResult"
+                  "$ref": "#/components/schemas/DeviceByIdDtoApiResult"
                 }
               }
             }
@@ -1173,6 +1488,136 @@
         }
       }
     },
+    "/api/device-category/get-summary-by-room-id": {
+      "get": {
+        "tags": [
+          "DeviceCategory"
+        ],
+        "parameters": [
+          {
+            "name": "RoomId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceCategorySummaryDtoPagingResultApiResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceCategorySummaryDtoPagingResultApiResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceCategorySummaryDtoPagingResultApiResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/device-category/get-summary": {
+      "get": {
+        "tags": [
+          "DeviceCategory"
+        ],
+        "parameters": [
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceCategorySummaryDtoPagingResultApiResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceCategorySummaryDtoPagingResultApiResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceCategorySummaryDtoPagingResultApiResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/device-log/create": {
       "post": {
         "tags": [
@@ -1256,7 +1701,8 @@
                 0,
                 1,
                 2,
-                3
+                3,
+                4
               ],
               "type": "integer",
               "format": "int32"
@@ -1349,6 +1795,190 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/DeviceLogDtoApiResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/device-log/get-by-device-id": {
+      "get": {
+        "tags": [
+          "DeviceLog"
+        ],
+        "parameters": [
+          {
+            "name": "DeviceId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "UserActionId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Action",
+            "in": "query",
+            "schema": {
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceLogDtoPagingResultApiResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceLogDtoPagingResultApiResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceLogDtoPagingResultApiResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/device-log/get-by-user-id": {
+      "get": {
+        "tags": [
+          "DeviceLog"
+        ],
+        "parameters": [
+          {
+            "name": "UserActionId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "DeviceId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "Action",
+            "in": "query",
+            "schema": {
+              "enum": [
+                0,
+                1,
+                2,
+                3,
+                4
+              ],
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceLogDtoPagingResultApiResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceLogDtoPagingResultApiResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DeviceLogDtoPagingResultApiResult"
                 }
               }
             }
@@ -1844,6 +2474,75 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/UserDtoListApiResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/role/get-by-user": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "parameters": [
+          {
+            "name": "UserId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleDtoListApiResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleDtoListApiResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoleDtoListApiResult"
                 }
               }
             }
@@ -2910,7 +3609,7 @@
         },
         "additionalProperties": false
       },
-      "BorrowDto": {
+      "BorrowRequestDto": {
         "type": "object",
         "properties": {
           "id": {
@@ -2925,9 +3624,38 @@
             "type": "string",
             "nullable": true
           },
+          "deviceCategoryImageUrl": {
+            "type": "string",
+            "nullable": true
+          },
           "userActionId": {
             "type": "integer",
             "format": "int32"
+          },
+          "class": {
+            "type": "string",
+            "nullable": true
+          },
+          "roomId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "roomName": {
+            "type": "string",
+            "nullable": true
+          },
+          "buildingName": {
+            "type": "string",
+            "nullable": true
+          },
+          "floorName": {
+            "type": "string",
+            "nullable": true
+          },
+          "userActionName": {
+            "type": "string",
+            "nullable": true
           },
           "requestDate": {
             "type": "string",
@@ -2956,11 +3684,27 @@
           "description": {
             "type": "string",
             "nullable": true
+          },
+          "buildingOldPutName": {
+            "type": "string",
+            "nullable": true
+          },
+          "floorOldPutName": {
+            "type": "string",
+            "nullable": true
+          },
+          "roomOldPutName": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceSerialNumber": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
       },
-      "BorrowDtoApiResult": {
+      "BorrowRequestDtoApiResult": {
         "type": "object",
         "properties": {
           "status": {
@@ -2971,18 +3715,18 @@
             "nullable": true
           },
           "data": {
-            "$ref": "#/components/schemas/BorrowDto"
+            "$ref": "#/components/schemas/BorrowRequestDto"
           }
         },
         "additionalProperties": false
       },
-      "BorrowDtoPagingResult": {
+      "BorrowRequestDtoPagingResult": {
         "type": "object",
         "properties": {
           "items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/BorrowDto"
+              "$ref": "#/components/schemas/BorrowRequestDto"
             },
             "nullable": true
           },
@@ -3013,7 +3757,7 @@
         },
         "additionalProperties": false
       },
-      "BorrowDtoPagingResultApiResult": {
+      "BorrowRequestDtoPagingResultApiResult": {
         "type": "object",
         "properties": {
           "status": {
@@ -3024,7 +3768,7 @@
             "nullable": true
           },
           "data": {
-            "$ref": "#/components/schemas/BorrowDtoPagingResult"
+            "$ref": "#/components/schemas/BorrowRequestDtoPagingResult"
           }
         },
         "additionalProperties": false
@@ -3127,6 +3871,20 @@
         },
         "additionalProperties": false
       },
+      "ChangePasswordRequest": {
+        "type": "object",
+        "properties": {
+          "oldPassword": {
+            "type": "string",
+            "nullable": true
+          },
+          "newPassword": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CreateAccountRequest": {
         "type": "object",
         "properties": {
@@ -3171,6 +3929,15 @@
           "userActionId": {
             "type": "integer",
             "format": "int32"
+          },
+          "class": {
+            "type": "string",
+            "nullable": true
+          },
+          "roomId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           },
           "borrowDate": {
             "type": "string",
@@ -3218,7 +3985,8 @@
               0,
               1,
               2,
-              3
+              3,
+              4
             ],
             "type": "integer",
             "format": "int32"
@@ -3366,6 +4134,104 @@
         },
         "additionalProperties": false
       },
+      "DeviceByIdDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "deviceCategoryId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "serialNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "status": {
+            "enum": [
+              0,
+              1,
+              2,
+              3,
+              4
+            ],
+            "type": "integer",
+            "format": "int32"
+          },
+          "roomId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "purchaseDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "warrantyExpiryDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "brokenDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "deviceCategoryName": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceCategoryImageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "buildingName": {
+            "type": "string",
+            "nullable": true
+          },
+          "floorName": {
+            "type": "string",
+            "nullable": true
+          },
+          "roomName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeviceByIdDtoApiResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/DeviceByIdDto"
+          }
+        },
+        "additionalProperties": false
+      },
       "DeviceCategoryDto": {
         "type": "object",
         "properties": {
@@ -3383,6 +4249,11 @@
           },
           "imageUrl": {
             "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
             "nullable": true
           }
         },
@@ -3457,6 +4328,85 @@
         },
         "additionalProperties": false
       },
+      "DeviceCategorySummaryDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeviceCategorySummaryDtoPagingResult": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DeviceCategorySummaryDto"
+            },
+            "nullable": true
+          },
+          "pageIndex": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sortBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "orderBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalRecords": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "DeviceCategorySummaryDtoPagingResultApiResult": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/DeviceCategorySummaryDtoPagingResult"
+          }
+        },
+        "additionalProperties": false
+      },
       "DeviceDto": {
         "type": "object",
         "properties": {
@@ -3496,6 +4446,11 @@
             "format": "int32",
             "nullable": true
           },
+          "baseRoomId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
           "purchaseDate": {
             "type": "string",
             "format": "date-time",
@@ -3511,11 +4466,24 @@
             "format": "date-time",
             "nullable": true
           },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "deviceCategoryName": {
             "type": "string",
             "nullable": true
           },
           "deviceCategoryImageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "buildingName": {
+            "type": "string",
+            "nullable": true
+          },
+          "floorName": {
             "type": "string",
             "nullable": true
           },
@@ -3606,12 +4574,21 @@
             "type": "integer",
             "format": "int32"
           },
+          "deviceName": {
+            "type": "string",
+            "nullable": true
+          },
+          "deviceCategoryImageUrl": {
+            "type": "string",
+            "nullable": true
+          },
           "action": {
             "enum": [
               0,
               1,
               2,
-              3
+              3,
+              4
             ],
             "type": "integer",
             "format": "int32"
@@ -3627,6 +4604,10 @@
           "userActionId": {
             "type": "integer",
             "format": "int32",
+            "nullable": true
+          },
+          "userActionName": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -3883,42 +4864,6 @@
         },
         "additionalProperties": false
       },
-      "GetAccountRequestRequest": {
-        "type": "object",
-        "properties": {
-          "pageIndex": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "pageSize": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sortBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "orderBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "keyword": {
-            "type": "string",
-            "nullable": true
-          },
-          "status": {
-            "enum": [
-              0,
-              1,
-              2
-            ],
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "Int32EntityIdentityRequest": {
         "type": "object",
         "properties": {
@@ -3991,6 +4936,23 @@
           },
           "data": {
             "$ref": "#/components/schemas/LoginResult"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginUsernameRequest": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "rememberMe": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false
@@ -4266,6 +5228,14 @@
           "description": {
             "type": "string",
             "nullable": true
+          },
+          "buildingName": {
+            "type": "string",
+            "nullable": true
+          },
+          "floorName": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -4460,11 +5430,6 @@
             "type": "integer",
             "format": "int32"
           },
-          "borrowDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
           "description": {
             "type": "string",
             "nullable": true
@@ -4593,6 +5558,14 @@
           },
           "isRefreshToken": {
             "type": "boolean",
+            "nullable": true
+          },
+          "position": {
+            "type": "string",
+            "nullable": true
+          },
+          "code": {
+            "type": "string",
             "nullable": true
           }
         },

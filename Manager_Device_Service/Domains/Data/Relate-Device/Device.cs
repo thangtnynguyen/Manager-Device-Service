@@ -15,6 +15,9 @@ namespace Manager_Device_Service.Domains.Data.Relate_Device
         // Vị trí hiện tại của thiết bị
         public int? RoomId { get; set; }
 
+        //Lưu  phòng chứa thiết bị ban đầu
+        public int? BaseRoomId { get; set; }
+
 
 
         // Ngày mua và hạn bảo hành

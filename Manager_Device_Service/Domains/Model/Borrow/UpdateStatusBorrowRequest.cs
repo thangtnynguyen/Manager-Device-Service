@@ -10,8 +10,10 @@ namespace Manager_Device_Service.Domains.Model.Borrow
         // Trạng thái mới: Approved, Rejected, Returned, ...
         public BorrowRequestStatus Status { get; set; }
 
+        //public int? RoomId { get; set; }
+
         // Nếu duyệt mượn, có thể cập nhật BorrowDate theo thời gian duyệt
-        public DateTime? BorrowDate { get; set; }
+        //public DateTime? BorrowDate { get; set; }
 
         // Nếu trả, có thể ghi chú thêm
         public string? Description { get; set; }

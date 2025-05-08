@@ -9,7 +9,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Manager_Device_Service.Controllers.Identity
 {

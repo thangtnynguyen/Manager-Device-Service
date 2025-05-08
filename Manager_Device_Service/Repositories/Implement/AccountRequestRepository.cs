@@ -54,14 +54,13 @@ namespace Manager_Device_Service.Repositories.Implement
                 .ProjectTo<AccountRequestDto>(_mapper.ConfigurationProvider)
                 .ToListAsync();
 
-            return new PagingResult<AccountRequestDto>(items, total, pageIndex, pageSize);
+            return new PagingResult<AccountRequestDto>(items, pageIndex, pageSize, total);
         }
 
         public async Task<AccountRequestDto> CreateAccountRequestAsync(CreateAccountRequest request)
         {
             var entity = _mapper.Map<AccountRequest>(request);
-            _context.AccountRequests.Add(entity);
-            await _context.SaveChangesAsync();
+            await CreateAsync(entity);
             return _mapper.Map<AccountRequestDto>(entity);
         }
 
@@ -71,7 +70,8 @@ namespace Manager_Device_Service.Repositories.Implement
             if (entity == null) throw new Exception("Yêu cầu không tồn tại");
 
             entity.Status = request.Status;
-            await _context.SaveChangesAsync();
+            await UpdateAsync(entity);
+
 
             return _mapper.Map<AccountRequestDto>(entity);
         }

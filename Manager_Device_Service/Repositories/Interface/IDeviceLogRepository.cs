@@ -10,5 +10,9 @@ namespace Manager_Device_Service.Repositories.Interface
         Task<PagingResult<DeviceLogDto>> PagingAsync(int? deviceId, int? userActionId, DeviceAction? action, string? sortBy, string? orderBy, int pageIndex, int pageSize);
 
         Task<DeviceLogDto> CreateDeviceLogAsync(CreateDeviceLogRequest deviceLog);
+
+        Task<PagingResult<DeviceLogDto>> GetByUserPagingAsync(int? deviceId, DeviceAction? action, string? sortBy, string? orderBy, int userActionId, int pageIndex, int pageSize);
+
+
     }
 }

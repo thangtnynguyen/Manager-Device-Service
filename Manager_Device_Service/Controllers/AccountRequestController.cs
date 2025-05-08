@@ -31,7 +31,7 @@ namespace Manager_Device_Service.Controllers
             var result = await _accountRequestRepository.CreateAccountRequestAsync(request);
             return new ApiResult<bool>
             {
-                Status = result != null,
+                Status = true,
                 Message = result != null ? "Tạo yêu cầu cấp tài khoản thành công!" : "Tạo yêu cầu cấp tài khoản thất bại!",
                 Data = result != null
             };
@@ -50,8 +50,11 @@ namespace Manager_Device_Service.Controllers
                     UserName = result.Code,
                     Email = result.Email,
                     Name = result.Name,
+                    Code=result.Code,
+                    Position = result.Position,
                     PhoneNumber = result.PhoneNumber,
-                    EmailConfirmed = true // tùy bạn muốn bật xác nhận hay không
+                    EmailConfirmed = true,
+                    IsActivated = true,
                 };
 
                 var defaultPassword = $"{result.Code}@123";
@@ -68,40 +71,55 @@ namespace Manager_Device_Service.Controllers
                 }
 
                 // 2. Gửi mail thông báo tài khoản đã được cấp
-                await _mailService.SendMail(new SendMailRequest
+                Task.Run(() => _mailService.SendMail(new SendMailRequest
                 {
                     ToEmail = result.Email,
-                    Subject = "Tài khoản đã được cấp",
+                    Subject = "Tài khoản UTEHY Manange Device đã được cấp",
                     Body = $"Xin chào {result.Name},<br/><br/>" +
                            $"Tài khoản của bạn đã được cấp.<br/>" +
                            $"Tên đăng nhập: <b>{result.Code}</b><br/>" +
                            $"Mật khẩu: <b>{defaultPassword}</b><br/><br/>" +
                            $"Vui lòng đăng nhập và đổi mật khẩu ngay sau khi sử dụng lần đầu.<br/>" +
                            $"Trân trọng."
-                });
+                }));
+                return new ApiResult<bool>
+                {
+                    Status = true,
+                    Message = "Cập nhật trạng thái yêu cầu thành công!",
+                    Data = true
+                };
             }
             else if (result.Status == AccountRequestStatus.Rejected)
             {
-                await _mailService.SendMail(new SendMailRequest
+                Task.Run(() => _mailService.SendMail(new SendMailRequest
                 {
                     ToEmail = result.Email,
                     Subject = "Yêu cầu cấp tài khoản bị từ chối",
                     Body = $"Xin chào {result.Name},<br/><br/>" +
-                           $"Rất tiếc! Yêu cầu cấp tài khoản của bạn đã bị từ chối.<br/><br/>" +
+                           $"Rất tiếc! Yêu cầu cấp tài khoản UTEHY Manange Device của bạn đã bị từ chối.<br/><br/>" +
                            $"Trân trọng."
-                });
+                }));
+                return new ApiResult<bool>
+                {
+                    Status = true,
+                    Message = "Cập nhật trạng thái yêu cầu thành công!",
+                    Data = true
+                };
+            }
+            else
+            {
+                return new ApiResult<bool>
+                {
+                    Status = true,
+                    Message = "Cập nhật trạng thái yêu cầu thành công!",
+                    Data = true
+                };
             }
 
-            return new ApiResult<bool>
-            {
-                Status = true,
-                Message = "Cập nhật trạng thái yêu cầu thành công!",
-                Data = true
-            };
         }
 
 
-        [HttpPost("paging")]
+        [HttpGet("paging")]
         public async Task<ApiResult<PagingResult<AccountRequestDto>>> GetPaging([FromQuery] GetAccountRequestRequest request)
         {
             var result = await _accountRequestRepository.GetPagingAsync(

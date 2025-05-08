@@ -28,7 +28,7 @@ namespace Manager_Device_Service.Domains.Data.Identity
 
         public bool? IsLockAccount { get; set; } = false; // Mặc định chưa bị khóa
 
-        public int? EmployeeId { get; set; }
+        public string Position { get; set; } = string.Empty;
 
         public DateTime? CreatedAt { get; set; }
 

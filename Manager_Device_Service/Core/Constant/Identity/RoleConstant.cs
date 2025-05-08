@@ -8,11 +8,9 @@ namespace Manager_Device_Service.Core.Constant.Identity
 {
     public class RoleConstant
     {
-        public static string Teacher = "Teacher";
+        //public static int RoleAdminId = 1;
+        public const int RoleAdminId = 1;
 
-        public static string Student = "Student";
-
-        public static string Staff = "Staff";
 
     }
 }

@@ -8,8 +8,8 @@ using Manager_Device_Service.Domains.Model.Auth;
 using Manager_Device_Service.Domains.Model.Mail;
 using Manager_Device_Service.Services.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using System.Data.Entity;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
@@ -75,7 +75,7 @@ namespace Manager_Device_Service.Services
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypeConstant.Id, user.Id.ToString()),
-                new Claim(ClaimTypeConstant.UserName, user.Name),
+                new Claim(ClaimTypeConstant.UserName, user.UserName),
                 new Claim(ClaimTypeConstant.Email, user.Email),
 
             };
@@ -283,7 +283,7 @@ namespace Manager_Device_Service.Services
         }
         private async Task<User> GetUserCurrentAsync()
         {
-            var username = _httpContextAccessor?.HttpContext?.User.FindFirst(x => x.Type == ClaimTypeConstant.Email)?.Value;
+            var username = _httpContextAccessor?.HttpContext?.User.FindFirst(x => x.Type == ClaimTypeConstant.UserName)?.Value;
 
             if (string.IsNullOrEmpty(username))
             {

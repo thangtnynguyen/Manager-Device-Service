@@ -8,7 +8,7 @@ using Manager_Device_Service.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Manager_Device_Service.Domains;
 using Manager_Device_Service.Domains.Model.Device;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Manager_Device_Service.Repositories.Implement
 {
@@ -29,7 +29,7 @@ namespace Manager_Device_Service.Repositories.Implement
 
         public async Task<PagingResult<DeviceCategoryDto>> PagingAsync(string? name, string? sortBy, string? orderBy, int pageIndex, int pageSize)
         {
-            var query = _dbContext.DeviceCategories.AsQueryable();
+            var query = _dbContext.DeviceCategories.Where(d => d.IsDeleted != true).AsQueryable();
 
             if (!string.IsNullOrEmpty(name))
             {
@@ -67,5 +67,117 @@ namespace Manager_Device_Service.Repositories.Implement
 
             return new PagingResult<DeviceCategoryDto>(data, pageIndex, pageSize, sortBy, orderBy, total);
         }
+
+
+        public async Task<PagingResult<DeviceCategorySummaryDto>> PagingCategorySummaryByRoomAsync(int roomId, string? sortBy, string? orderBy, int pageIndex, int pageSize)
+        {
+            var query = _dbContext.Devices
+                .Where(d => d.RoomId == roomId && d.IsDeleted != true)
+                .GroupBy(d => new { d.DeviceCategoryId, d.DeviceCategory.Name })
+                .Select(g => new DeviceCategorySummaryDto
+                {
+                    Id = g.Key.DeviceCategoryId,
+                    Name = g.Key.Name,
+                    Description=g.FirstOrDefault().DeviceCategory.Description,
+                    ImageUrl = g.FirstOrDefault().DeviceCategory.ImageUrl,  
+                    Quantity = g.Count()
+                })
+                .Where(g => g.Quantity > 0);
+
+            // Sorting
+            if (string.IsNullOrEmpty(sortBy) && string.IsNullOrEmpty(orderBy))
+            {
+                query = query.OrderByDescending(x => x.Id);
+            }
+            else if (string.IsNullOrEmpty(orderBy))
+            {
+                query = sortBy == SortByConstant.Asc ? query.OrderBy(x => x.Id) : query.OrderByDescending(x => x.Id);
+            }
+            else if (string.IsNullOrEmpty(sortBy))
+            {
+                query = query.OrderByDescending(x => x.Id);
+            }
+            else
+            {
+                if (orderBy == OrderByConstant.Name && sortBy == SortByConstant.Asc)
+                    query = query.OrderBy(x => x.Name);
+                else if (orderBy == OrderByConstant.Name && sortBy == SortByConstant.Desc)
+                    query = query.OrderByDescending(x => x.Name);
+                else if (orderBy == OrderByConstant.Quantity && sortBy == SortByConstant.Asc)
+                    query = query.OrderBy(x => x.Quantity);
+                else if (orderBy == OrderByConstant.Quantity && sortBy == SortByConstant.Desc)
+                    query = query.OrderByDescending(x => x.Quantity);
+                else
+                    query = query.OrderByDescending(x => x.Id); // fallback
+            }
+
+            int total = await query.CountAsync();
+
+            var data = await query
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PagingResult<DeviceCategorySummaryDto>(data, pageIndex, pageSize, sortBy, orderBy, total);
+        }
+
+
+        public async Task<PagingResult<DeviceCategorySummaryDto>> PagingCategorySummaryAsync(string? sortBy, string? orderBy, int pageIndex, int pageSize)
+        {
+            var query = _dbContext.Devices
+                .Where(d => d.IsDeleted != true)
+                .GroupBy(d => new { d.DeviceCategoryId, d.DeviceCategory.Name })
+                .Select(g => new DeviceCategorySummaryDto
+                {
+                    Id = g.Key.DeviceCategoryId,
+                    Name = g.Key.Name,
+                    Description = g.FirstOrDefault().DeviceCategory.Description,
+                    ImageUrl = g.FirstOrDefault().DeviceCategory.ImageUrl,
+                    Quantity = g.Count()
+                })
+                .Where(g => g.Quantity > 0);
+
+            // Sorting
+            if (string.IsNullOrEmpty(sortBy) && string.IsNullOrEmpty(orderBy))
+            {
+                query = query.OrderByDescending(x => x.Id);
+            }
+            else if (string.IsNullOrEmpty(orderBy))
+            {
+                query = sortBy == SortByConstant.Asc ? query.OrderBy(x => x.Id) : query.OrderByDescending(x => x.Id);
+            }
+            else if (string.IsNullOrEmpty(sortBy))
+            {
+                query = query.OrderByDescending(x => x.Id);
+            }
+            else
+            {
+                if (orderBy == OrderByConstant.Name && sortBy == SortByConstant.Asc)
+                    query = query.OrderBy(x => x.Name);
+                else if (orderBy == OrderByConstant.Name && sortBy == SortByConstant.Desc)
+                    query = query.OrderByDescending(x => x.Name);
+                else if (orderBy == OrderByConstant.Quantity && sortBy == SortByConstant.Asc)
+                    query = query.OrderBy(x => x.Quantity);
+                else if (orderBy == OrderByConstant.Quantity && sortBy == SortByConstant.Desc)
+                    query = query.OrderByDescending(x => x.Quantity);
+                else
+                    query = query.OrderByDescending(x => x.Id); // fallback
+            }
+
+            int total = await query.CountAsync();
+
+            var data = await query
+                .Skip((pageIndex - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
+
+            return new PagingResult<DeviceCategorySummaryDto>(data, pageIndex, pageSize, sortBy, orderBy, total);
+        }
+
+
+
     }
+
+
+
 }

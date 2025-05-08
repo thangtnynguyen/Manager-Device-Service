@@ -4,7 +4,6 @@ using Manager_Device_Service.Domains.Data.Identity;
 using Manager_Device_Service.Domains.Data.Relate_Device;
 using Manager_Device_Service.Domains.Data.University;
 using Manager_Device_Service.Domains.Data.User;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;

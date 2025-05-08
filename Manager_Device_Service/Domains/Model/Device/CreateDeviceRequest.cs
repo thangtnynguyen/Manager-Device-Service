@@ -1,4 +1,6 @@
-﻿namespace Manager_Device_Service.Domains.Model.Device
+﻿using System.Text.Json.Serialization;
+
+namespace Manager_Device_Service.Domains.Model.Device
 {
     public class CreateDeviceRequest
     {
@@ -7,6 +9,8 @@
         public string Name { get; set; } = string.Empty;
         public string? Description { get; set; }
         public int? RoomId { get; set; }
+        [JsonIgnore]
+        public int? BaseRoomId { get; set; }
         public DateTime? PurchaseDate { get; set; }
         public DateTime? WarrantyExpiryDate { get; set; }
     }

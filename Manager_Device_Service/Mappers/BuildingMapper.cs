@@ -23,7 +23,9 @@ namespace Manager_Device_Service.Mappers
             CreateMap<UpdateFloorRequest, Floor>();
 
             // Mapping cho Room
-            CreateMap<Room, RoomDto>();
+            CreateMap<Room, RoomDto>()
+                .ForMember(dest => dest.FloorName, opt => opt.MapFrom(src => src.Floor != null ? src.Floor.Name : string.Empty))
+                .ForMember(dest => dest.BuildingName, opt => opt.MapFrom(src => src.Floor != null ? src.Floor.Building.Name : string.Empty));
             CreateMap<CreateRoomRequest, Room>();
             CreateMap<UpdateRoomRequest, Room>();
         }

@@ -69,6 +69,24 @@ namespace Manager_Device_Service.Controllers.Identity
                 Data = userInRoleDto
             };
         }
+        /// <summary>
+        /// HRM suggest : Lấy quyền theo người dùng
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
+        [HttpGet("get-by-user")]
+        //[HasPermission(PermissionConstant.ManageRoleView)]
+        public async Task<ApiResult<List<RoleDto>>> GetRoleByEmployee([FromQuery] GetRoleByUserRequest request)
+        {
+            var result = await _roleService.GetByUser(request);
+
+            return new ApiResult<List<RoleDto>>()
+            {
+                Status = true,
+                Message = "Lấy thông tin  vai trò theo nhân viên thành công!",
+                Data = result.Items
+            };
+        }
 
         [HttpPost("create")]
         //[HasPermission(PermissionConstant.ManageRoleCreate)]

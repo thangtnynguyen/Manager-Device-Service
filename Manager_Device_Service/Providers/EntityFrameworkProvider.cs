@@ -13,7 +13,7 @@ namespace Manager_Device_Service.Providers
             {
                 options.UseSqlServer(connectionString, sqlServerOptionsAction =>
                 {
-                    sqlServerOptionsAction.UseHierarchyId();
+                    //sqlServerOptionsAction.UseHierarchyId();
                     sqlServerOptionsAction.CommandTimeout(30);
                     //sqlServerOptionsAction.EnableRetryOnFailure(3);
 

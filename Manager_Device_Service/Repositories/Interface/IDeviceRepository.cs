@@ -7,7 +7,8 @@ namespace Manager_Device_Service.Repositories.Interface
 {
     public interface IDeviceRepository : IRepositoryBase<Device, int>
     {
-        Task<PagingResult<DeviceDto>> PagingAsync(string? name, int? deviceCategoryId, int? roomId, DeviceStatus? status, string? sortBy, string? orderBy, int pageIndex, int pageSize);
+        Task<PagingResult<DeviceDto>> PagingAsync(string? name, int? deviceCategoryId, int? roomId,string? serialNumber, string? keyword, DeviceStatus? status, string? sortBy, string? orderBy, int pageIndex, int pageSize);
+        Task<DeviceByIdDto> GetByIdDetailAsync(int id);
 
         Task<DeviceDto> CreateDeviceAsync(CreateDeviceRequest model);
 

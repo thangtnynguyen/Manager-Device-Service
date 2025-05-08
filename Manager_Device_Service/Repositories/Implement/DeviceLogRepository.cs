@@ -7,7 +7,7 @@ using Manager_Device_Service.Repositories.Interface.ISeedWorks;
 using Manager_Device_Service.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Manager_Device_Service.Domains;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Manager_Device_Service.Repositories.Implement
 {
@@ -35,6 +35,47 @@ namespace Manager_Device_Service.Repositories.Implement
 
             if (userActionId.HasValue)
                 query = query.Where(dl => dl.UserActionId != null && dl.UserActionId == userActionId.Value);
+
+            if (action.HasValue)
+                query = query.Where(dl => dl.Action == action.Value);
+
+            int total = await query.CountAsync();
+
+            if (string.IsNullOrEmpty(orderBy) && string.IsNullOrEmpty(sortBy))
+            {
+                query = query.OrderByDescending(dl => dl.Id);
+            }
+            else if (string.IsNullOrEmpty(orderBy))
+            {
+                query = sortBy == SortByConstant.Asc ? query.OrderBy(dl => dl.Id) : query.OrderByDescending(dl => dl.Id);
+            }
+            else if (string.IsNullOrEmpty(sortBy))
+            {
+                query = query.OrderByDescending(dl => dl.Id);
+            }
+            else
+            {
+                if (orderBy == OrderByConstant.Id && sortBy == SortByConstant.Asc)
+                    query = query.OrderBy(dl => dl.Id);
+                else if (orderBy == OrderByConstant.Id && sortBy == SortByConstant.Desc)
+                    query = query.OrderByDescending(dl => dl.Id);
+            }
+
+            query = query.Skip((pageIndex - 1) * pageSize)
+                         .Take(pageSize);
+
+            var data = await _mapper.ProjectTo<DeviceLogDto>(query).ToListAsync();
+
+            return new PagingResult<DeviceLogDto>(data, pageIndex, pageSize, sortBy, orderBy, total);
+        }
+
+
+        public async Task<PagingResult<DeviceLogDto>> GetByUserPagingAsync(int? deviceId, DeviceAction? action, string? sortBy, string? orderBy, int userActionId, int pageIndex, int pageSize)
+        {
+            var query = _dbContext.DeviceLogs.Where(dl => dl.UserActionId != null && dl.UserActionId == userActionId).AsQueryable();
+
+            if (deviceId.HasValue)
+                query = query.Where(dl => dl.DeviceId == deviceId.Value);
 
             if (action.HasValue)
                 query = query.Where(dl => dl.Action == action.Value);

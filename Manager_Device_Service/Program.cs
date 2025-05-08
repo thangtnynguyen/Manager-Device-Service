@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Manager_Device_Service.Providers;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Hangfire;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,14 @@ builder.Configuration.AddJsonFile("appsettings.json", optional: true, reloadOnCh
 
 
 // Provider
+builder.Services.AddHangfire(config =>
+{
+    config.UseSimpleAssemblyNameTypeSerializer()
+    .UseRecommendedSerializerSettings()
+    .UseSqlServerStorage(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+builder.Services.AddHangfireServer();
+
 builder.Services.AddSignalR();
 builder.Services.AddAppProvider();
 builder.Services.AddEntityFrameworkProvider(builder);
@@ -74,6 +83,9 @@ app.UseHttpsRedirection();
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+app.UseHangfireDashboard();
+
 
 app.MapControllers();
 

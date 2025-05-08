@@ -1,5 +1,6 @@
 ﻿using Manager_Device_Service.Core.Data;
 using Manager_Device_Service.Domains.Data.Relate_Device;
+using Manager_Device_Service.Domains.Data.University;
 
 namespace Manager_Device_Service.Domains.Data.Borrow
 {
@@ -11,6 +12,12 @@ namespace Manager_Device_Service.Domains.Data.Borrow
 
         // Người yêu cầu 
         public int UserActionId { get; set; }
+
+        // Lớp mượn
+        public string? Class { get; set; }
+
+        // Phòng mượn
+        public int? RoomId { get; set; }
 
         // Ngày yêu cầu mượn
         public DateTime RequestDate { get; set; } = DateTime.Now;
@@ -26,6 +33,11 @@ namespace Manager_Device_Service.Domains.Data.Borrow
 
         // Mô tả hoặc ghi chú (tuỳ chọn)
         public string? Description { get; set; }
+
+        public Room Room { get; set; }
+
+        public Manager_Device_Service.Domains.Data.Identity.User UserAction { get; set; }
+
     }
 
     public enum BorrowRequestStatus

@@ -16,9 +16,10 @@ namespace Manager_Device_Service.Controllers
         private readonly IUnitOfWork _unitOfWork;
         private readonly IFileService _fileService;
 
-        public DeviceCategoryController(IUnitOfWork unitOfWork)
+        public DeviceCategoryController(IUnitOfWork unitOfWork,IFileService fileService)
         {
             _unitOfWork = unitOfWork;
+            _fileService = fileService;
         }
 
         // POST: api/device-category/create
@@ -27,7 +28,7 @@ namespace Manager_Device_Service.Controllers
         {
             if (request.ImageFile?.Length > 0)
             {
-                request.ImageUrl = await _fileService.UploadFileAsync(request.ImageFile, PathFolderConstant.Banner);
+                request.ImageUrl = await _fileService.UploadFileAsync(request.ImageFile, PathFolderConstant.Image);
             }
             else
             {
@@ -71,5 +72,21 @@ namespace Manager_Device_Service.Controllers
             var entity = await _unitOfWork.DeviceCategories.GetByIdAsync(request.Id);
             return ApiResult<DeviceCategoryDto>.Success("Lấy thông tin danh mục thiết bị thành công", _unitOfWork.Mapper.Map<DeviceCategoryDto>(entity));
         }
+
+        [HttpGet("get-summary-by-room-id")]
+        public async Task<ApiResult<PagingResult<DeviceCategorySummaryDto>>> GetDeviceCategorySummaryPaging([FromQuery] GetDeviceCategorySummaryRequest request)
+        {
+            var result = await _unitOfWork.DeviceCategories.PagingCategorySummaryByRoomAsync(request.RoomId, request.SortBy, request.OrderBy, request.PageIndex, request.PageSize);
+            return ApiResult<PagingResult<DeviceCategorySummaryDto>>.Success("Lấy danh sách danh mục thiết bị thành công", result);
+        }
+
+
+        [HttpGet("get-summary")]
+        public async Task<ApiResult<PagingResult<DeviceCategorySummaryDto>>> GetDeviceCategorySummaryPaging([FromQuery] PagingRequest request)
+        {
+            var result = await _unitOfWork.DeviceCategories.PagingCategorySummaryAsync(request.SortBy, request.OrderBy, request.PageIndex, request.PageSize);
+            return ApiResult<PagingResult<DeviceCategorySummaryDto>>.Success("Lấy danh sách danh mục thiết bị thành công", result);
+        }
+
     }
 }

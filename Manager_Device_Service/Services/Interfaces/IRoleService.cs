@@ -13,8 +13,6 @@ namespace Manager_Device_Service.Services.Interfaces
 
         Task<PagingResult<RoleDto>> GetByUser(GetRoleByUserRequest request);
 
-        Task<List<RoleDto>> GetRoleByEmployeeAsync(int employeeId);
-
         Task<RoleDto> Create(CreateRoleRequest request);
 
         Task<RoleDto> Edit(EditRoleRequest request);

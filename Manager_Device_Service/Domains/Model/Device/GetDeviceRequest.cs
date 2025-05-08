@@ -8,6 +8,8 @@ namespace Manager_Device_Service.Domains.Model.Device
         public string? Name { get; set; }
         public int? DeviceCategoryId { get; set; }
         public int? RoomId { get; set; }
+        public string? SerialNumber { get; set; }
+        public string? Keyword { get; set; }
         public DeviceStatus? Status { get; set; }
     }
 }

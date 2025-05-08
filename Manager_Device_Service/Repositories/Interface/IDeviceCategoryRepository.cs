@@ -11,5 +11,10 @@ namespace Manager_Device_Service.Repositories.Interface
 
         Task<DeviceCategoryDto> CreateDeviceCategoryAsync(CreateDeviceCategoryRequest deviceCategory);
 
+        Task<PagingResult<DeviceCategorySummaryDto>> PagingCategorySummaryByRoomAsync(int roomId, string? sortBy, string? orderBy, int pageIndex, int pageSize);
+
+        Task<PagingResult<DeviceCategorySummaryDto>> PagingCategorySummaryAsync(string? sortBy, string? orderBy, int pageIndex, int pageSize);
+
+
     }
 }

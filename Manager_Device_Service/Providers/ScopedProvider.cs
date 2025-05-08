@@ -37,7 +37,7 @@ namespace Manager_Device_Service.Providers
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IRoleService, RoleService>();
-            //services.AddScoped<IJobHangFireService, JobHangFireService>();
+            services.AddScoped<IBorrowReminderService, BorrowReminderService>();
             services.AddScoped<IPermissionService, PermissionService>();
 
             return services;

@@ -7,7 +7,7 @@ using Manager_Device_Service.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Manager_Device_Service.Domains.Data.Borrow;
 using Manager_Device_Service.Domains;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Manager_Device_Service.Repositories.Implement
 {
@@ -21,13 +21,13 @@ namespace Manager_Device_Service.Repositories.Implement
             _mapper = mapper;
         }
 
-        public async Task<BorrowDto> CreateBorrowRequestAsync(CreateBorrowRequest model)
+        public async Task<BorrowRequestDto> CreateBorrowRequestAsync(CreateBorrowRequest model)
         {
             await CreateAsync(_mapper.Map<BorrowRequest>(model));
-            return _mapper.Map<BorrowDto>(model);
+            return _mapper.Map<BorrowRequestDto>(model);
         }
 
-        public async Task<BorrowDto> UpdateStatusBorrowRequestAsync(UpdateStatusBorrowRequest model)
+        public async Task<BorrowRequestDto> UpdateStatusBorrowRequestAsync(UpdateStatusBorrowRequest model)
         {
             var borrowEntity = await _dbContext.BorrowRequests.FindAsync(model.Id);
             if (borrowEntity == null)
@@ -36,10 +36,10 @@ namespace Manager_Device_Service.Repositories.Implement
             }
             _mapper.Map(model, borrowEntity);
             await UpdateAsync(borrowEntity);
-            return _mapper.Map<BorrowDto>(borrowEntity);
+            return _mapper.Map<BorrowRequestDto>(borrowEntity);
         }
 
-        public async Task<PagingResult<BorrowDto>> PagingAsync(string? keyword, string? sortBy, string? orderBy, int pageIndex, int pageSize)
+        public async Task<PagingResult<BorrowRequestDto>> PagingAsync(string? keyword, string? Class, string? roomName, BorrowRequestStatus? status, int? userActionId, string? sortBy, string? orderBy, int pageIndex, int pageSize)
         {
             var query = _dbContext.BorrowRequests.AsQueryable();
 
@@ -48,9 +48,26 @@ namespace Manager_Device_Service.Repositories.Implement
                 string lowerKeyword = keyword.ToLower();
                 query = query.Where(br => br.Description.ToLower().Contains(lowerKeyword)
                                           || br.Device.SerialNumber.ToLower().Contains(lowerKeyword)
+                                          || br.Class.ToLower().Contains(lowerKeyword)
                                           || br.Device.Name.ToLower().Contains(lowerKeyword));
             }
 
+            if (!string.IsNullOrEmpty(Class))
+            {
+                query= query.Where(br=>br.Class.ToLower().Contains(Class.ToLower()));
+            }
+            if (!string.IsNullOrEmpty(roomName))
+            {
+                query = query.Where(br => br.Room.Name.ToLower().Contains(roomName.ToLower()));
+            }
+            if(status.HasValue)
+            {
+                query = query.Where(br => br.Status == status);
+            }
+            if (userActionId.HasValue)
+            {
+                query = query.Where(br => br.UserActionId == userActionId);
+            }
             int total = await query.CountAsync();
 
             if (string.IsNullOrEmpty(orderBy) && string.IsNullOrEmpty(sortBy))
@@ -76,8 +93,8 @@ namespace Manager_Device_Service.Repositories.Implement
             query = query.Skip((pageIndex - 1) * pageSize)
                          .Take(pageSize);
 
-            var data = await _mapper.ProjectTo<BorrowDto>(query).ToListAsync();
-            return new PagingResult<BorrowDto>(data, pageIndex, pageSize, sortBy, orderBy, total);
+            var data = await _mapper.ProjectTo<BorrowRequestDto>(query).ToListAsync();
+            return new PagingResult<BorrowRequestDto>(data, pageIndex, pageSize, sortBy, orderBy, total);
         }
     }
 }

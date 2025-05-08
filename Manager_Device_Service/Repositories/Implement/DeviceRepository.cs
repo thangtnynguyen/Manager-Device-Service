@@ -7,8 +7,9 @@ using Manager_Device_Service.Repositories.Interface.ISeedWorks;
 using Manager_Device_Service.Repositories.Interface;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Manager_Device_Service.Domains;
-using System.Data.Entity;
 using Manager_Device_Service.Domains.Model.DeviceCategory;
+using Microsoft.EntityFrameworkCore;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Manager_Device_Service.Repositories.Implement
 {
@@ -23,8 +24,8 @@ namespace Manager_Device_Service.Repositories.Implement
 
         public async Task<DeviceDto> CreateDeviceAsync(CreateDeviceRequest model)
         {
-            await CreateAsync(_mapper.Map<Device>(model));
-            return _mapper.Map<DeviceDto>(model);
+            var result = await CreateAsync(_mapper.Map<Device>(model));
+            return _mapper.Map<DeviceDto>(result);
         }
 
         public async Task<DeviceDto> UpdateDeviceAsync(UpdateDeviceRequest model)
@@ -50,14 +51,25 @@ namespace Manager_Device_Service.Repositories.Implement
         }
 
 
-        public async Task<PagingResult<DeviceDto>> PagingAsync(string? name, int? deviceCategoryId, int? roomId, DeviceStatus? status, string? sortBy, string? orderBy, int pageIndex, int pageSize)
+        public async Task<PagingResult<DeviceDto>> PagingAsync(string? name, int? deviceCategoryId, int? roomId, string? serialNumber, string? keyword, DeviceStatus? status, string? sortBy, string? orderBy, int pageIndex, int pageSize)
         {
-            var query = _dbContext.Devices.AsQueryable();
+            //var query = _dbContext.Devices.Include(d=>d.DeviceCategory).Include(d=>d.Room).AsQueryable();
+            var query = _dbContext.Devices.Where(d => d.IsDeleted != true).AsQueryable();
 
             if (!string.IsNullOrEmpty(name))
             {
                 string lowerName = name.ToLower();
                 query = query.Where(d => d.Name.ToLower().Contains(lowerName));
+            }
+            if (!string.IsNullOrEmpty(serialNumber))
+            {
+                string lowerSerialNumber = serialNumber.ToLower();
+                query = query.Where(d => d.SerialNumber.ToLower().Contains(lowerSerialNumber));
+            }
+            if (!string.IsNullOrEmpty(keyword))
+            {
+                string lowerKeyword = keyword.ToLower();
+                query = query.Where(d => d.SerialNumber.ToLower().Contains(lowerKeyword) || d.Name.ToLower().Contains(lowerKeyword) || d.Description!.ToLower().Contains(lowerKeyword));
             }
 
             if (deviceCategoryId.HasValue)
@@ -103,6 +115,17 @@ namespace Manager_Device_Service.Repositories.Implement
             var data = await _mapper.ProjectTo<DeviceDto>(query).ToListAsync();
 
             return new PagingResult<DeviceDto>(data, pageIndex, pageSize, sortBy, orderBy, total);
+        }
+
+
+        public async Task<DeviceByIdDto> GetByIdDetailAsync(int id)
+        {
+            var query = _dbContext.Devices.Where(d => d.Id == id).AsQueryable();
+
+            var device = await _mapper.ProjectTo<DeviceByIdDto>(query).FirstOrDefaultAsync();
+
+            return _mapper.Map<DeviceByIdDto>(device);
+
         }
     }
 }

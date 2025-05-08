@@ -149,30 +149,7 @@ namespace Manager_Device_Service.Services
             }
         }
 
-        public async Task<List<RoleDto>> GetRoleByEmployeeAsync(int employeeId)
-        {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(u=>u.EmployeeId == employeeId);
-            var userRoles = await _dbContext.UserRoles
-                .Where(ur => ur.UserId == user.Id)
-                .Select(ur => ur.RoleId)
-                .ToListAsync();
-
-            var roles = await _dbContext.Roles.Where(r=>userRoles.Contains(r.Id)).ToListAsync();
-            //var normalizedRoles = new List<string>();
-
-            //foreach (var roleId in userRoles)
-            //{
-            //    var role = await _roleManager.FindByIdAsync(roleId.ToString());
-            //    if (role != null)
-            //    {
-            //        normalizedRoles.Add(role.NormalizedName);
-            //    }
-            //}
-
-            //return normalizedRoles;
-
-            return _mapper.Map<List<RoleDto>>(roles);
-        }
+       
         public async Task<RoleDto> Create(CreateRoleRequest request)
         {
             try

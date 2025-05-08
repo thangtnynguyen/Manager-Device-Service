@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Manager_Device_Service.Core.Constant;
+using Manager_Device_Service.Core.Constant.Identity;
 using Manager_Device_Service.Core.Exception;
 using Manager_Device_Service.Core.Model;
 using Manager_Device_Service.Domains;
@@ -247,6 +248,46 @@ namespace Manager_Device_Service.Services
 
             return permissions;
         }
+
+
+
+        public async Task<List<UserDto>> GetUserByRoleAsync(int roleId= RoleConstant.RoleAdminId)
+        {
+            try
+            {
+                var users = await _dbContext.Users
+                    .Where(u => u.UserRoles.Any(ur => ur.RoleId == roleId))
+                    .ToListAsync();
+
+                if (!users.Any())
+                {
+                    throw new ApiException("Không tìm thấy người dùng với RoleId này!", HttpStatusCodeConstant.BadRequest);
+                }
+
+                var userDtos = new List<UserDto>();
+
+                foreach (var user in users)
+                {
+                    var permissions = await GetPermissionByUserAsync(user);
+                    var roles = await GetRoleNormalizedAsync(user);
+
+                    var userDto = _mapper.Map<UserDto>(user);
+                    userDto.Permissions = permissions;
+                    userDto.RoleNames = roles;
+
+                    userDtos.Add(userDto);
+                }
+
+                return userDtos;
+            }
+            catch (Exception ex)
+            {
+                throw new ApiException(ex.Message, HttpStatusCodeConstant.InternalServerError, ex);
+            }
+        }
+
+
+
 
         private async Task<List<string>> GetUserWithRolePermission(User user)
         {

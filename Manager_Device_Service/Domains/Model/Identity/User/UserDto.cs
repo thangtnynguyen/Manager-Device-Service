@@ -24,6 +24,11 @@ namespace Manager_Device_Service.Domains.Model.Identity.User
 
         public bool? IsRefreshToken { get; set; }
 
+        public string Position { get; set; } = string.Empty;
+
+        public string? Code { get; set; }
+
+
         //public int? CityId { get; set; }
 
         //public string? CityName { get; set; }

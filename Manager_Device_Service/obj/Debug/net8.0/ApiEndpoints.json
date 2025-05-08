@@ -29,14 +29,39 @@
     "ContainingType": "Manager_Device_Service.Controllers.AccountRequestController",
     "Method": "GetPaging",
     "RelativePath": "api/account-request/paging",
-    "HttpMethod": "POST",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "request",
-        "Type": "Manager_Device_Service.Domains.Model.AccountRequest.GetAccountRequestRequest",
-        "IsRequired": true
+        "Name": "Keyword",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Status",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageIndex",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortBy",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderBy",
+        "Type": "System.String",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": [
@@ -62,6 +87,32 @@
       {
         "Name": "request",
         "Type": "Manager_Device_Service.Domains.Model.AccountRequest.UpdateAccountRequestStatus",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Manager_Device_Service.Controllers.Identity.AuthController",
+    "Method": "ChangePassword",
+    "RelativePath": "api/auth/change-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Manager_Device_Service.Domains.Model.Identity.User.ChangePasswordRequest",
         "IsRequired": true
       }
     ],
@@ -105,6 +156,52 @@
   },
   {
     "ContainingType": "Manager_Device_Service.Controllers.Identity.AuthController",
+    "Method": "LoginByUsername",
+    "RelativePath": "api/auth/login-by-username",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "request",
+        "Type": "Manager_Device_Service.Domains.Model.Auth.LoginUsernameRequest",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Domains.Model.Auth.LoginResult, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Manager_Device_Service.Controllers.Identity.AuthController",
+    "Method": "Logout",
+    "RelativePath": "api/auth/logout",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Manager_Device_Service.Controllers.Identity.AuthController",
     "Method": "RegisterByEmail",
     "RelativePath": "api/auth/register-by-email",
     "HttpMethod": "POST",
@@ -131,8 +228,74 @@
   },
   {
     "ContainingType": "Manager_Device_Service.Controllers.BorrowRequestController",
+    "Method": "GetBorrowRequestsPaging",
+    "RelativePath": "api/borrow-request",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Keyword",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Class",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "RoomName",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "UserActionId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Status",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageIndex",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortBy",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderBy",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Core.Model.PagingResult\u00601[[Manager_Device_Service.Domains.Model.Borrow.BorrowRequestDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Manager_Device_Service.Controllers.BorrowRequestController",
     "Method": "CreateBorrowRequest",
-    "RelativePath": "api/borrow/create",
+    "RelativePath": "api/borrow-request/create",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -145,7 +308,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Domains.Model.Borrow.BorrowDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Domains.Model.Borrow.BorrowRequestDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -158,7 +321,7 @@
   {
     "ContainingType": "Manager_Device_Service.Controllers.BorrowRequestController",
     "Method": "GetBorrowRequestById",
-    "RelativePath": "api/borrow/get-by-id",
+    "RelativePath": "api/borrow-request/get-by-id",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -171,7 +334,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Domains.Model.Borrow.BorrowDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Domains.Model.Borrow.BorrowRequestDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -184,40 +347,60 @@
   {
     "ContainingType": "Manager_Device_Service.Controllers.BorrowRequestController",
     "Method": "GetBorrowRequestsPaging",
-    "RelativePath": "api/borrow/paging",
+    "RelativePath": "api/borrow-request/paging",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "keyword",
+        "Name": "Keyword",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "sortBy",
+        "Name": "Class",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "orderBy",
+        "Name": "RoomName",
         "Type": "System.String",
         "IsRequired": false
       },
       {
-        "Name": "pageIndex",
+        "Name": "UserActionId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Status",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageIndex",
         "Type": "System.Int32",
         "IsRequired": false
       },
       {
-        "Name": "pageSize",
+        "Name": "PageSize",
         "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortBy",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderBy",
+        "Type": "System.String",
         "IsRequired": false
       }
     ],
     "ReturnTypes": [
       {
-        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Core.Model.PagingResult\u00601[[Manager_Device_Service.Domains.Model.Borrow.BorrowDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Core.Model.PagingResult\u00601[[Manager_Device_Service.Domains.Model.Borrow.BorrowRequestDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -230,7 +413,7 @@
   {
     "ContainingType": "Manager_Device_Service.Controllers.BorrowRequestController",
     "Method": "UpdateStatusBorrowRequest",
-    "RelativePath": "api/borrow/update-status",
+    "RelativePath": "api/borrow-request/update-status",
     "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
@@ -243,7 +426,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Domains.Model.Borrow.BorrowDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Domains.Model.Borrow.BorrowRequestDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -425,6 +608,93 @@
   },
   {
     "ContainingType": "Manager_Device_Service.Controllers.DeviceCategoryController",
+    "Method": "GetDeviceCategorySummaryPaging",
+    "RelativePath": "api/device-category/get-summary",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "PageIndex",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortBy",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderBy",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Core.Model.PagingResult\u00601[[Manager_Device_Service.Domains.Model.DeviceCategory.DeviceCategorySummaryDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Manager_Device_Service.Controllers.DeviceCategoryController",
+    "Method": "GetDeviceCategorySummaryPaging",
+    "RelativePath": "api/device-category/get-summary-by-room-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "RoomId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageIndex",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortBy",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderBy",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Core.Model.PagingResult\u00601[[Manager_Device_Service.Domains.Model.DeviceCategory.DeviceCategorySummaryDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Manager_Device_Service.Controllers.DeviceCategoryController",
     "Method": "GetDeviceCategoriesPaging",
     "RelativePath": "api/device-category/paging",
     "HttpMethod": "GET",
@@ -523,6 +793,62 @@
   },
   {
     "ContainingType": "Manager_Device_Service.Controllers.DeviceLogController",
+    "Method": "GetDeviceLogByDeviceId",
+    "RelativePath": "api/device-log/get-by-device-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "DeviceId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "UserActionId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Action",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageIndex",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortBy",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderBy",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Core.Model.PagingResult\u00601[[Manager_Device_Service.Domains.Model.DeviceLog.DeviceLogDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Manager_Device_Service.Controllers.DeviceLogController",
     "Method": "GetDeviceLogById",
     "RelativePath": "api/device-log/get-by-id",
     "HttpMethod": "GET",
@@ -538,6 +864,62 @@
     "ReturnTypes": [
       {
         "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Domains.Model.DeviceLog.DeviceLogDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Manager_Device_Service.Controllers.DeviceLogController",
+    "Method": "GetDeviceLogByUserId",
+    "RelativePath": "api/device-log/get-by-user-id",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserActionId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "DeviceId",
+        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "Action",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageIndex",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortBy",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderBy",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Core.Model.PagingResult\u00601[[Manager_Device_Service.Domains.Model.DeviceLog.DeviceLogDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -645,7 +1027,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Domains.Model.Device.DeviceDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Domains.Model.Device.DeviceByIdDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -676,6 +1058,16 @@
       {
         "Name": "RoomId",
         "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "IsRequired": false
+      },
+      {
+        "Name": "SerialNumber",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Keyword",
+        "Type": "System.String",
         "IsRequired": false
       },
       {
@@ -1100,6 +1492,52 @@
     "ReturnTypes": [
       {
         "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[Manager_Device_Service.Domains.Model.Identity.Role.RoleDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "Manager_Device_Service.Controllers.Identity.RoleController",
+    "Method": "GetRoleByEmployee",
+    "RelativePath": "api/role/get-by-user",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "UserId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageIndex",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "PageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "SortBy",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "OrderBy",
+        "Type": "System.String",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "Manager_Device_Service.Core.Model.ApiResult\u00601[[System.Collections.Generic.List\u00601[[Manager_Device_Service.Domains.Model.Identity.Role.RoleDto, Manager_Device_Service, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

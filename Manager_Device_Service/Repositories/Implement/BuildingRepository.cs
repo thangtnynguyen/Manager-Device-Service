@@ -7,7 +7,7 @@ using Manager_Device_Service.Domains.Model.Building;
 using Manager_Device_Service.Repositories.Interface;
 using Manager_Device_Service.Repositories.Interface.ISeedWorks;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using System.Data.Entity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Manager_Device_Service.Repositories.Implement
 {

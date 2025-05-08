@@ -7,10 +7,10 @@ namespace Manager_Device_Service.Repositories.Interface
 {
     public interface IBorrowRequestRepository : IRepositoryBase<BorrowRequest, int>
     {
-        Task<BorrowDto> CreateBorrowRequestAsync(CreateBorrowRequest model);
+        Task<BorrowRequestDto> CreateBorrowRequestAsync(CreateBorrowRequest model);
 
-        Task<BorrowDto> UpdateStatusBorrowRequestAsync(UpdateStatusBorrowRequest model);
+        Task<BorrowRequestDto> UpdateStatusBorrowRequestAsync(UpdateStatusBorrowRequest model);
 
-        Task<PagingResult<BorrowDto>> PagingAsync(string? keyword, string? sortBy, string? orderBy, int pageIndex, int pageSize);
+        Task<PagingResult<BorrowRequestDto>> PagingAsync(string? keyword, string? Class, string? roomName, BorrowRequestStatus? status, int? userActionId, string? sortBy, string? orderBy, int pageIndex, int pageSize);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Manager_Device_Service.Core.Model;
+using Manager_Device_Service.Domains.Model.AccountRequest;
 using Manager_Device_Service.Domains.Model.DeviceLog;
 using Manager_Device_Service.Repositories.Interface.ISeedWorks;
 using Microsoft.AspNetCore.Http;
@@ -46,5 +47,35 @@ namespace Manager_Device_Service.Controllers
             var entity = await _unitOfWork.DeviceLogs.GetByIdAsync(request.Id);
             return ApiResult<DeviceLogDto>.Success("Lấy thông tin lịch sử thiết bị thành công", _unitOfWork.Mapper.Map<DeviceLogDto>(entity));
         }
+
+        [HttpGet("get-by-device-id")]
+        public async Task<ApiResult<PagingResult<DeviceLogDto>>> GetDeviceLogByDeviceId([FromQuery] Manager_Device_Service.Domains.Model.DeviceLog.GetDeviceLogRequest request)
+        {
+            var result = await _unitOfWork.DeviceLogs.PagingAsync(
+                request.DeviceId,
+                request.UserActionId,
+                request.Action,
+                request.SortBy,
+                request.OrderBy,
+                request.PageIndex,
+                request.PageSize);
+            return ApiResult<PagingResult<DeviceLogDto>>.Success("Lấy danh sách lịch sử thiết bị theo thiết bị thành công", result);
+        }
+
+        [HttpGet("get-by-user-id")]
+        public async Task<ApiResult<PagingResult<DeviceLogDto>>> GetDeviceLogByUserId([FromQuery] Manager_Device_Service.Domains.Model.DeviceLog.GetDeviceLogByUserRequest request)
+        {
+            var result = await _unitOfWork.DeviceLogs.GetByUserPagingAsync(
+                request.DeviceId,
+                request.Action,
+                request.SortBy,
+                request.OrderBy,
+                request.UserActionId,
+                request.PageIndex,
+                request.PageSize);
+            return ApiResult<PagingResult<DeviceLogDto>>.Success("Lấy danh sách lịch sử thiết bị theo người dùng thành công", result);
+        }
+
+       
     }
 }

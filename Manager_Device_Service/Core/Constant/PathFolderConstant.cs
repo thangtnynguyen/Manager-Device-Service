@@ -8,6 +8,7 @@ namespace Manager_Device_Service.Core.Constant
 {
     public class PathFolderConstant
     {
+        public const string Image = "Image";
         public const string Company = "Image/Company";
         public const string Banner = "Image/Banner";
         public const string Avatar = "Image/Avatar";

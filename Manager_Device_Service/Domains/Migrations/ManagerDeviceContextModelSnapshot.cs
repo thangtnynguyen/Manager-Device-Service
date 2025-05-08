@@ -33,6 +33,9 @@ namespace Manager_Device_Service.Domains.Migrations
                     b.Property<DateTime?>("BorrowDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Class")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("datetime2");
 
@@ -57,6 +60,9 @@ namespace Manager_Device_Service.Domains.Migrations
                     b.Property<DateTime>("RequestDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("RoomId")
+                        .HasColumnType("int");
+
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
@@ -75,6 +81,10 @@ namespace Manager_Device_Service.Domains.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DeviceId");
+
+                    b.HasIndex("RoomId");
+
+                    b.HasIndex("UserActionId");
 
                     b.ToTable("BorrowRequests");
                 });
@@ -240,9 +250,6 @@ namespace Manager_Device_Service.Domains.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<int?>("EmployeeId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsActivated")
                         .HasColumnType("bit");
 
@@ -283,6 +290,10 @@ namespace Manager_Device_Service.Domains.Migrations
 
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("RefreshToken")
                         .HasColumnType("nvarchar(max)");
@@ -326,6 +337,9 @@ namespace Manager_Device_Service.Domains.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("BaseRoomId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("BrokenDate")
                         .HasColumnType("datetime2");
@@ -478,6 +492,8 @@ namespace Manager_Device_Service.Domains.Migrations
 
                     b.HasIndex("DeviceId");
 
+                    b.HasIndex("UserActionId");
+
                     b.ToTable("DeviceLogs");
                 });
 
@@ -628,6 +644,74 @@ namespace Manager_Device_Service.Domains.Migrations
                     b.ToTable("Rooms");
                 });
 
+            modelBuilder.Entity("Manager_Device_Service.Domains.Data.User.AccountRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClassCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("CreatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Position")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("RequestDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("UpdatedBy")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccountRequests");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
                 {
                     b.Property<int>("Id")
@@ -737,7 +821,21 @@ namespace Manager_Device_Service.Domains.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Manager_Device_Service.Domains.Data.University.Room", "Room")
+                        .WithMany()
+                        .HasForeignKey("RoomId");
+
+                    b.HasOne("Manager_Device_Service.Domains.Data.Identity.User", "UserAction")
+                        .WithMany()
+                        .HasForeignKey("UserActionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Device");
+
+                    b.Navigation("Room");
+
+                    b.Navigation("UserAction");
                 });
 
             modelBuilder.Entity("Manager_Device_Service.Domains.Data.Identity.Permission", b =>
@@ -793,7 +891,13 @@ namespace Manager_Device_Service.Domains.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Manager_Device_Service.Domains.Data.Identity.User", "UserAction")
+                        .WithMany()
+                        .HasForeignKey("UserActionId");
+
                     b.Navigation("Device");
+
+                    b.Navigation("UserAction");
                 });
 
             modelBuilder.Entity("Manager_Device_Service.Domains.Data.University.Floor", b =>
